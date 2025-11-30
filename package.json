@@ -1,0 +1,14 @@
+{
+  "name": "aoc-runner",
+  "version": "1.0.0",
+  "type": "module",
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  },
+  "imports": {
+    "#helpers": "./helpers/index.js"
+  }
+}
