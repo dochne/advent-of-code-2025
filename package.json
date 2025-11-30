@@ -6,9 +6,12 @@
     "@types/bun": "latest"
   },
   "peerDependencies": {
-    "typescript": "^5"
+    "typescript": "^5.9.3"
   },
   "imports": {
     "#helpers": "./helpers/index.js"
+  },
+  "scripts": {
+    "test": "bun test"
   }
 }

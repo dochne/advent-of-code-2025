@@ -5,4 +5,6 @@ interface Array<T> {
   sum(): Array<T> extends Array<number> ? number : never;
   min(): Array<T> extends Array<number> ? number : never;
   max(): Array<T> extends Array<number> ? number : never;
+  eachCons(n: number): Array<Array<T>>;
+  sortBy(block: (row: T) => number | string): Array<T>;
 }

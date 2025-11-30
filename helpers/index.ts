@@ -1,2 +1,2 @@
-export * from "./array";
+import "./array";
 export * from "./basic";
