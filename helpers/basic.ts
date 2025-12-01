@@ -9,5 +9,8 @@ export const readStdin = async () => {
 };
 
 export const print = async (value: any) => {
+  if (typeof value === "object") {
+    value = JSON.stringify(value, null, 2);
+  }
   await write(stdout, value);
 };
