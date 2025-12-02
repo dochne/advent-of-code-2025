@@ -14,3 +14,10 @@ export const print = async (value: any) => {
   }
   await write(stdout, value);
 };
+
+export const println = async (value: any) => {
+  if (typeof value === "object") {
+    value = JSON.stringify(value, null, 2);
+  }
+  await write(stdout, value + "\n");
+};

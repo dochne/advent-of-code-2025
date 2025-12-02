@@ -1,17 +1,6 @@
 #!/usr/bin/env bun
 import { readStdin, print } from "../helpers";
 
-// L68
-// L30
-// R48
-// L5
-// R60
-// L55
-// L1
-// L99
-// R14
-// L82
-
 const value = (await readStdin())
   .split("\n")
   .map((v) => v.match(/([LR])(.*)/))

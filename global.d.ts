@@ -8,3 +8,7 @@ interface Array<T> {
   eachCons(n: number): Array<Array<T>>;
   sortBy(block: (row: T) => number | string): Array<T>;
 }
+
+interface Number {
+  times: (block: (self: Number) => void) => void;
+}
