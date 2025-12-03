@@ -10,5 +10,10 @@ interface Array<T> {
 }
 
 interface Number {
-  times: (block: (self: Number) => void) => void;
+  times: <R>(block: (self: number) => R) => Array<R>;
+}
+
+interface String {
+  insert: (pos: number, char: string | number) => string;
+  remove: (pos: number) => string;
 }
