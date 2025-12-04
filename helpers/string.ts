@@ -1,5 +1,8 @@
 {
   const methods = {
+    then: function <T, R>(this: string, block: (self: string) => R): R {
+      return block(this);
+    },
     insert: function <T, R>(
       this: string,
       pos: number,

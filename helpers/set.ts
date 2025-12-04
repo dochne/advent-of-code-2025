@@ -1,7 +1,7 @@
 {
   const methods = {
-    then: function <T, R>(this: number, block: (self: number) => R): R {
-      return block(this);
+    filter: function <T, R>(this: Set<T>, block: (self: T) => boolean): Set<T> {
+      return new Set([...this].filter((v) => block(v)));
     },
     times: function <T, R>(this: number, block: (self: number) => R): R[] {
       let result = [];
@@ -13,7 +13,7 @@
   };
 
   for (const [key, method] of Object.entries(methods)) {
-    Object.defineProperty(Number.prototype, key, {
+    Object.defineProperty(Set.prototype, key, {
       value: method,
       writable: false,
       enumerable: false,

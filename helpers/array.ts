@@ -23,10 +23,13 @@
     max: function (this: Array<number>): number {
       return Math.max(...this);
     },
-    product function<T> (this: Array<T>,  ...arrays: T[][]): T[][] {
-      return [this, ...arrays].reduce((acc, curr) => {
-        return acc.flatMap(a => curr.map(c => [...a, c]));
-      }, [[]] as T[][]);
+    product: function <T>(this: Array<T>, ...arrays: T[][]): T[][] {
+      return [this, ...arrays].reduce(
+        (acc, curr) => {
+          return acc.flatMap((a) => curr.map((c) => [...a, c]));
+        },
+        [[]] as T[][]
+      );
     },
     eachCons: function <T>(this: Array<T>, n: number): Array<Array<T>> {
       const endIndex = this.length - n;

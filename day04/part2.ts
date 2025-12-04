@@ -1,7 +1,7 @@
 #!/usr/bin/env bun
 import { readStdin, println } from "../helpers";
 
-const rolls = (await readStdin())
+let rolls = (await readStdin())
   .trim()
   .split("\n")
   .reduce((acc, row, ri) => {
@@ -13,25 +13,24 @@ const rolls = (await readStdin())
       );
   }, new Set<string>());
 
-let total = 0;
+let originalLength = rolls.size;
+let lastLength;
 
-while (true) {
-  const removed = [...rolls].filter((v) => {
-    const [x, y] = v.split(",").map((v) => Number(v));
-    const nextTo = (3)
-      .times((a) => (3).times((b) => `${x + (-1 + a)},${y + (-1 + b)}`))
-      .flat();
-    if (nextTo.filter((v) => rolls.has(v)).length < 5) {
-      rolls.delete(v);
-      return true;
-    }
-    return false;
-  }).length;
-
-  if (removed === 0) {
-    break;
-  }
-  total += removed;
+while (lastLength !== rolls.size) {
+  lastLength = rolls.size;
+  rolls = rolls.filter((v) =>
+    v
+      .split(",")
+      .map(Number)
+      .then(
+        ([x, y]) =>
+          [-1, 0, 1]
+            .product([-1, 0, 1])
+            .map(([a, b]) => `${x + a},${y + b}`)
+            .flat()
+            .filter((v) => rolls.has(v)).length >= 5
+      )
+  );
 }
 
-println(total);
+println(originalLength - lastLength);
