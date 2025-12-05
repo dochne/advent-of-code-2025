@@ -1,6 +1,9 @@
 interface Array<T> {
+  first(): T | undefined;
+  last(): T | undefined;
   then<R>(block: (self: Array<T>) => R): R;
   tap(block: (self: Array<T>) => void): Array<T>;
+  filterMap<R>(block: (self: T) => R): Array<NonNullable<R>>;
   transpose(): Array<T> extends Array<Array<infer U>> ? Array<Array<U>> : never;
   sum(): Array<T> extends Array<number> ? number : never;
   min(): Array<T> extends Array<number> ? number : never;

@@ -10,9 +10,27 @@
       block(this);
       return this;
     },
+    first: function <T>(this: Array<T>): T | undefined {
+      return this[0] ?? undefined;
+    },
+    last: function <T>(this: Array<T>): T | undefined {
+      return this[this.length - 1] ?? undefined;
+    },
     transpose: function <T>(this: Array<Array<T>>): Array<Array<T>> {
       if (this.length === 0) return [];
       return this[0].map((_, colIndex) => this.map((row) => row[colIndex]));
+    },
+    filterMap: function <T, R>(
+      this: Array<T>,
+      block: (self: T) => R | undefined
+    ): Array<R> {
+      return this.reduce((acc, val) => {
+        const value = block(val);
+        if (value !== undefined) {
+          acc.push(value);
+        }
+        return acc;
+      }, [] as Array<R>);
     },
     sum: function (this: Array<number>): number {
       return this.reduce((prev, cur) => prev + cur, 0);
@@ -49,7 +67,7 @@
       return result;
     },
     sortBy: function <T>(this: Array<T>, block: (self: T) => string | number) {
-      this.sort((aRow, bRow) => {
+      return this.sort((aRow, bRow) => {
         const a = block(aRow);
         const b = block(bRow);
         if (a > b) return 1;
