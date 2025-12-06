@@ -6,21 +6,19 @@ interface Array<T> {
   filterMap<R>(block: (self: T) => R): Array<NonNullable<R>>;
   transpose(): Array<T> extends Array<Array<infer U>> ? Array<Array<U>> : never;
   sum(): Array<T> extends Array<number> ? number : never;
+  sum(
+    block: (self: T) => number
+  ): Array<T> extends Array<number> ? number : never;
   min(): Array<T> extends Array<number> ? number : never;
   max(): Array<T> extends Array<number> ? number : never;
   eachCons(n: number): Array<Array<T>>;
   sortBy(block: (row: T) => number | string): Array<T>;
+  product(): Array<T> extends Array<number> ? number : never;
   product(...arrays: T[][]): Array<T>[];
+  groupBy(block: (row: T) => number | string): Record<string, T[]>;
+  eachWithObject<A>(initial: A, block: (acc: A, row: T) => void): A;
 }
 
-// product: function <T>(this: Array<T>, ...arrays: T[][]): T[][] {
-//       return [this, ...arrays].reduce(
-//         (acc, curr) => {
-//           return acc.flatMap((a) => curr.map((c) => [...a, c]));
-//         },
-//         [[]] as T[][]
-//       );
-//     },
 interface Number {
   times: <R>(block: (self: number) => R) => Array<R>;
   then<R>(block: (self: number) => R): R;

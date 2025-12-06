@@ -21,3 +21,7 @@ export const println = async (value: any) => {
   }
   await write(stdout, value + "\n");
 };
+
+export const exit = async () => {
+  process.exit(0);
+};

@@ -6,20 +6,11 @@ const value = (await readStdin())
   .split("\n")
   .map((v) => v.split(""))
   .transpose()
-  .reduce((acc, col) => {
-    if (["*", "+"].includes(col.last()!)) {
-      acc.push({ op: col.last()! as "+" | "*", values: [] });
-    }
-    acc.last()!.values.push(Number(col.slice(0, col.length - 1).join("")));
-    return acc;
-  }, [] as { op: "+" | "*" | undefined; values: number[] }[])
-  .reduce(
-    (acc, v) =>
-      acc +
-      (v.op === "+"
-        ? v.values.sum()
-        : v.values.filter((v) => v !== 0).reduce((acc, n) => acc * n)),
-    0
-  );
+  .eachWithObject([] as { op: string; values: number[] }[], (acc, col) => {
+    const [op, num] = [col.pop()!, Number(col.join(""))];
+    if ("*+".includes(op)) acc.push({ op, values: [] });
+    if (num > 0) acc.last()!.values.push(num);
+  })
+  .sum(({ op, values }) => (op === "+" ? values.sum() : values.product()));
 
 println(value);

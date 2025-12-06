@@ -32,8 +32,14 @@
         return acc;
       }, [] as Array<R>);
     },
-    sum: function (this: Array<number>): number {
-      return this.reduce((prev, cur) => prev + cur, 0);
+    sum: function <T>(
+      this: Array<T | number>,
+      block: ((self: T) => number) | undefined
+    ): number {
+      if (block !== undefined) {
+        return (this as Array<T>).reduce((prev, cur) => prev + block(cur), 0);
+      }
+      return (this as Array<number>).reduce((prev, cur) => prev + cur, 0);
     },
     min: function (this: Array<number>): number {
       return Math.min(...this);
@@ -41,7 +47,10 @@
     max: function (this: Array<number>): number {
       return Math.max(...this);
     },
-    product: function <T>(this: Array<T>, ...arrays: T[][]): T[][] {
+    product: function <T>(this: Array<T>, ...arrays: T[][]): T[][] | number {
+      if (arrays.length === 0) {
+        return (this as Array<number>).reduce((acc, curr) => curr * acc);
+      }
       return [this, ...arrays].reduce(
         (acc, curr) => {
           return acc.flatMap((a) => curr.map((c) => [...a, c]));
@@ -74,6 +83,25 @@
         if (a < b) return -1;
         return 0;
       });
+    },
+    groupBy: function <T>(this: Array<T>, block: (self: T) => string | number) {
+      const obj: Record<string | number, T[]> = {};
+      for (const item of this) {
+        const key = block(item);
+        obj[key] ??= [];
+        obj[key].push(item);
+      }
+      return obj;
+    },
+    eachWithObject: function <T, A>(
+      this: Array<T>,
+      initial: A,
+      block: (acc: A, self: T) => void
+    ): A {
+      return this.reduce((acc: A, cur: T) => {
+        block(acc, cur);
+        return acc;
+      }, initial);
     },
   };
 
