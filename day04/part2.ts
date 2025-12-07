@@ -7,9 +7,9 @@ let rolls = (await readStdin())
   .reduce((acc, row, ri) => {
     return row
       .split("")
-      .reduce(
-        (acc, value, ci) => (value === "@" ? acc.add(`${ri},${ci}`) : acc),
-        acc
+      .eachWithObject(
+        acc,
+        (acc, value, ci) => value === "@" && acc.add(`${ri},${ci}`)
       );
   }, new Set<string>());
 
@@ -27,8 +27,7 @@ while (lastLength !== rolls.size) {
           [-1, 0, 1]
             .product([-1, 0, 1])
             .map(([a, b]) => `${x + a},${y + b}`)
-            .flat()
-            .filter((v) => rolls.has(v)).length >= 5
+            .intersect(rolls).length >= 5
       )
   );
 }

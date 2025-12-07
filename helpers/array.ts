@@ -96,12 +96,26 @@
     eachWithObject: function <T, A>(
       this: Array<T>,
       initial: A,
-      block: (acc: A, self: T) => void
+      block: (acc: A, currentValue: T, currentIndex: number, array: T[]) => void
     ): A {
-      return this.reduce((acc: A, cur: T) => {
-        block(acc, cur);
+      return this.reduce((acc, cur, index, array) => {
+        block(acc, cur, index, array);
         return acc;
       }, initial);
+    },
+    intersect: function <U, T>(
+      this: Array<T>,
+      items: Set<T> | Map<U, T> | Array<T>
+    ): Array<T> {
+      if (items instanceof Set || items instanceof Map) {
+        return this.filter((v) => items.has(v));
+      } else if (items instanceof Array) {
+        return this.filter((v) => items.includes(v));
+      }
+      throw new Error("unreachable");
+    },
+    union: function <T>(self: Array<T>, ...arrays: Array<T>[]): Array<T> {
+      return [...new Set(self.concat(...arrays))];
     },
   };
 

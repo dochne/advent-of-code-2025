@@ -1,5 +1,11 @@
 {
   const methods = {
+    addMany: function <T>(this: Set<T>, ...items: T[]): Set<T> {
+      for (const item of items) {
+        this.add(item);
+      }
+      return this;
+    },
     filter: function <T, R>(this: Set<T>, block: (self: T) => boolean): Set<T> {
       return new Set([...this].filter((v) => block(v)));
     },
