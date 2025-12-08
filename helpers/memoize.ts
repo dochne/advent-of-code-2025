@@ -1,6 +1,6 @@
-export const createMemo = <T>() => {
-  const cache: Record<string, T> = {};
-  return (key: string, block: () => T) => {
-    return (cache[key] ??= block());
+export const createMemo = () => {
+  const cache: Record<string, unknown> = {};
+  return <T>(key: string, block: () => T) => {
+    return (cache[key] ??= block()) as T;
   };
 };

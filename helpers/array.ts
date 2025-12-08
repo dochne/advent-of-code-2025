@@ -130,6 +130,13 @@
       }
       return [...new Set(this)];
     },
+    zip: function <T, U>(this: Array<T>, that: Array<U>): Array<[T, U]> {
+      let result: Array<[T, U]> = [];
+      for (let x = 0; x < Math.min(this.length, that.length); x++) {
+        result.push([this[x], that[x]]);
+      }
+      return result;
+    },
   };
 
   for (const [key, method] of Object.entries(methods)) {

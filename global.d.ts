@@ -28,6 +28,7 @@ interface Array<T> {
   union(self: Array<T>, ...array: Array<T>[]): Array<T>;
   unique(): Array<T>;
   unique<R>(block: (value: T) => R): Array<T>;
+  zip<U>(that: Array<U>): Array<[T, U]>;
 }
 
 interface Number {
