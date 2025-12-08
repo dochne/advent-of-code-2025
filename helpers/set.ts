@@ -1,5 +1,13 @@
 {
   const methods = {
+    merge: function <T>(this: Set<T>, ...sets: Set<T>[]): Set<T> {
+      for (const set of sets) {
+        for (const item of set.values()) {
+          this.add(item);
+        }
+      }
+      return this;
+    },
     addMany: function <T>(this: Set<T>, ...items: T[]): Set<T> {
       for (const item of items) {
         this.add(item);

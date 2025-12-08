@@ -25,3 +25,7 @@ export const println = async (value: any) => {
 export const exit = async () => {
   process.exit(0);
 };
+
+export const isExample = () => {
+  return process.env.filename === "example.txt";
+};

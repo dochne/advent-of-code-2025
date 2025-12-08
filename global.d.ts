@@ -7,7 +7,11 @@ interface Array<T> {
   filterMap<R>(block: (self: T) => R): Array<NonNullable<R>>;
   first(): T | undefined;
   groupBy(block: (row: T) => number | string): Record<string, T[]>;
-  intersect<U>(items: Set<T> | Map<U, T> | Array<T>): T[];
+  intersect<U>(this: Array<T>, items: Set<T> | Map<T, U> | Array<T>): T[];
+  intersect<T extends string | number | symbol, U = never>(
+    this: Array<T>,
+    items: Record<T, U>
+  ): T[];
   last(): T | undefined;
   max(): Array<T> extends Array<number> ? number : never;
   min(): Array<T> extends Array<number> ? number : never;
@@ -22,6 +26,8 @@ interface Array<T> {
   then<R>(block: (self: Array<T>) => R): R;
   transpose(): Array<T> extends Array<Array<infer U>> ? Array<Array<U>> : never;
   union(self: Array<T>, ...array: Array<T>[]): Array<T>;
+  unique(): Array<T>;
+  unique<R>(block: (value: T) => R): Array<T>;
 }
 
 interface Number {
@@ -37,6 +43,7 @@ interface String {
 
 interface Set<T> {
   filter: (block: (self: T) => boolean) => Set<T>;
+  merge: (...sets: Set<T>[]) => Set<T>;
   addMany: (...items: T[]) => Set<T>;
 }
 

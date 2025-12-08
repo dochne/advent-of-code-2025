@@ -105,17 +105,30 @@
     },
     intersect: function <U, T>(
       this: Array<T>,
-      items: Set<T> | Map<U, T> | Array<T>
+      items: Set<T> | Map<T, U> | Array<T> | Record<string | symbol | number, U>
     ): Array<T> {
       if (items instanceof Set || items instanceof Map) {
         return this.filter((v) => items.has(v));
       } else if (items instanceof Array) {
         return this.filter((v) => items.includes(v));
+      } else if (items instanceof Object) {
+        const keys = Object.keys(items);
+        return this.filter((v) => keys.includes(String(v)));
       }
       throw new Error("unreachable");
     },
     union: function <T>(self: Array<T>, ...arrays: Array<T>[]): Array<T> {
       return [...new Set(self.concat(...arrays))];
+    },
+    unique: function <T, R>(this: Array<T>, block: (value: T) => R): Array<T> {
+      if (block) {
+        let map = new Map();
+        for (let x = 0; x < this.length; x++) {
+          map.set(block(this[x]), this[x]);
+        }
+        return [...map.values()];
+      }
+      return [...new Set(this)];
     },
   };
 
