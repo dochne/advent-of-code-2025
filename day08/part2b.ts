@@ -8,7 +8,7 @@ const memoize = createMemo();
   .split("\n")
   .chain((nodes) => ({
     nodes,
-    edges: (nodes.product(nodes) as [string, string][]).sortBy(([a, b]) =>
+    edges: (nodes.combinations(2) as [string, string][]).sortBy(([a, b]) =>
       memoize(`${a}-${b}`, () =>
         a
           .split(",")

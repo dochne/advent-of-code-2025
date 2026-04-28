@@ -137,6 +137,19 @@
       }
       return result;
     },
+    combinations: function <T>(this: Array<T>, n: number): Array<Array<T>> {
+      if (n < 0 || n > this.length) return [];
+      if (n === 0) return [[]];
+      if (n === this.length) return [this];
+
+      return this.eachWithObject<T[][]>([], (acc, _, index, arr) => {
+        for (const comb of arr.slice(index + 1).combinations(n - 1)) {
+          acc.push([arr[index], ...comb]);
+        }
+      });
+    },
+
+    // }
   };
 
   for (const [key, method] of Object.entries(methods)) {

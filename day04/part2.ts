@@ -22,7 +22,7 @@ while (lastLength !== rolls.size) {
     v
       .split(",")
       .map(Number)
-      .then(
+      .chain(
         ([x, y]) =>
           [-1, 0, 1]
             .product([-1, 0, 1])

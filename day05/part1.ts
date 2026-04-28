@@ -3,7 +3,7 @@ import { readStdin, println, Range } from "../helpers";
 
 const [fresh, ingredients] = (
   (await readStdin()).trim().split("\n\n") as [string, string]
-).then(([fresh, ingredients]) => {
+).chain(([fresh, ingredients]) => {
   return [
     fresh
       .split("\n")

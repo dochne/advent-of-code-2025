@@ -6,7 +6,7 @@ const memo = createMemo<number>();
 const value = (await readStdin())
   .trim()
   .split("\n")
-  .then((lines) => ({
+  .chain((lines) => ({
     pos: lines.shift()!.indexOf("S"),
     lines: lines.map((line) =>
       line

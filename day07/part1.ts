@@ -4,7 +4,7 @@ import { readStdin, println } from "../helpers";
 const value = (await readStdin())
   .trim()
   .split("\n")
-  .then((v) => {
+  .chain((v) => {
     const [state, lines] = [
       { split: 0, beams: new Set([v.shift()!.indexOf("S")]) },
       v,

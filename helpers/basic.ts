@@ -15,10 +15,16 @@ export const print = async (value: any) => {
   await write(stdout, value);
 };
 
-export const println = async (value: any) => {
-  if (typeof value === "object") {
-    value = JSON.stringify(value, null, 2);
-  }
+export const println = async (...values: any) => {
+  const value = values
+    .map((value: string) => {
+      if (typeof value === "object") {
+        return JSON.stringify(value, null, 2);
+      }
+      return value;
+    })
+    .join("");
+
   await write(stdout, value + "\n");
 };
 

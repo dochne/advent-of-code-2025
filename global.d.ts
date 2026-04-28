@@ -1,4 +1,5 @@
 interface Array<T> {
+  combinations(n: number): Array<Array<T>>;
   eachCons(n: number): Array<Array<T>>;
   eachWithObject<A>(
     initial: A,

@@ -4,17 +4,13 @@ import { readStdin, println, isExample } from "../helpers";
 const nodes = (await readStdin()).trim().split("\n");
 
 nodes
-  .product(nodes)
-  .map((pair) => pair.sortBy((v) => v))
-  .unique((v) => JSON.stringify(v))
-  .filter(([a, b]) => JSON.stringify(a) !== JSON.stringify(b))
+  .combinations(2)
   .map(([a, b]) => ({ a, b, distance: distance(a, b) }))
   .sortBy((v) => v.distance)
   .eachWithObject(
     new Map(nodes.map((v) => [v, new Set([v])])),
     (acc, { a, b }) => {
-      const set = acc.get(a)!;
-      set.merge(acc.get(b)!);
+      const set = acc.get(a)!.merge(acc.get(b)!);
       if (set.size === nodes.length) {
         println(Number(a.split(",").first()!) * Number(b.split(",").first()!));
         process.exit(0);

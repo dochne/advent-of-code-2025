@@ -32,4 +32,6 @@ if (dataFilename === "data.txt" && !existsSync(dataFile)) {
 if (!existsSync(dataFile)) throw new Error("Data does not exist");
 
 // console.log(`cat ${dataFile} | bun run ${absolutePath}`);
-await $`cat ${dataFile} | FILENAME=${dataFilename} bun run ${absolutePath}`.nothrow();
+const { exitCode } =
+  await $`cat ${dataFile} | FILENAME=${dataFilename} bun run ${absolutePath}`.nothrow();
+process.exit(exitCode);

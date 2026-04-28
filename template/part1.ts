@@ -1,4 +1,6 @@
 #!/usr/bin/env bun
-import { readStdin, print } from "../helpers";
+import { readStdin, println } from "../helpers";
 
-const value = (await readStdin()).split("\n");
+const value = (await readStdin()).trim().split("\n");
+
+println(value);
